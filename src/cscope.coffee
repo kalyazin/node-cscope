@@ -34,34 +34,34 @@ genericFind = (cmd, symbol, db, callback) ->
     .wait cscopeRegex
     .sendline quitCmd
     .run (err, stdout, exitcode) ->
-       if err
-         console.log "could not invoke cscope (#{err})"
-         process.exit 1
-       header = stdout[1].match(cscopeRegex)
-       lines = parseInt(header[1])
-       if lines == 0 # no such symbol
-         return null
+      if err
+        console.log "could not invoke cscope (#{err})"
+        process.exit 1
+      header = stdout[1].match(cscopeRegex)
+      lines = parseInt(header[1])
+      if lines == 0 # no such symbol
+        return null
 
-       startIdx = 2
-       res = []
-       drop_next = null
-       # for line in [startIdx..startIdx + lines - 1]
-       padding = 3 # 2 x ">>" and lines count
-       # FIXME: ugly hack
-       for line in [startIdx..startIdx + (stdout.length - padding) - 1]
-         if drop_next
-           drop_next = null
-           continue
-         m = stdout[line].match(outputRegex)
-         if !m # broken line
-           m = (stdout[line] + stdout[line + 1]).match(outputRegex)
-           drop_next = 1
-         res.push
-           file: m[1]
-           sym:  m[2]
-           line: m[3]
-           ctx:  m[4]
-       callback res
+      startIdx = 2
+      res = []
+      drop_next = null
+      # for line in [startIdx..startIdx + lines - 1]
+      padding = 3 # 2 x ">>" and lines count
+      # FIXME: ugly hack
+      for line in [startIdx..startIdx + (stdout.length - padding) - 1]
+        if drop_next
+          drop_next = null
+          continue
+        m = stdout[line].match(outputRegex)
+        if !m # broken line
+          m = (stdout[line] + stdout[line + 1]).match(outputRegex)
+          drop_next = 1
+        res.push
+          file: m[1]
+          sym:  m[2]
+          line: m[3]
+          ctx:  m[4]
+      callback res
 
 findSymbol = (symbol, db, callback) ->
   genericFind findSymbolCmd, symbol, db, callback
