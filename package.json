@@ -17,5 +17,8 @@
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/kalyazin/node-cscope/issues"
+  },
+  "dependencies": {
+    "nexpect": "~0.4.0"
   }
 }
