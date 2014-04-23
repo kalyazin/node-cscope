@@ -11,6 +11,11 @@ module.exports = (grunt) ->
         ext: '.js'
 
     coffeelint:
+      # FIXME: waiting for grunt-coffeelint to upgrade to
+      # coffeelint-1.3.0
+      options:
+        indentation:
+          level: 'warn'
       src: ['src/**/*.coffee']
       gruntfile: ['Gruntfile.coffee']
 
