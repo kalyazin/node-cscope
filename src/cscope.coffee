@@ -1,5 +1,21 @@
 nexpect = require 'nexpect'
 
+
+buildDb = (options, callback) ->
+  spawn = require('child_process').spawn
+
+  opts = ['-b']
+  opts.push '-i' + options.nameFile if options.nameFile
+  opts.push '-f' + options.refFile if options.refFile
+  proc = spawn 'cscope', opts, { cwd: options.cwd if options.cwd }
+
+  # proc.stderr.setEncoding 'utf8'
+  # proc.stderr.on 'data', (data) ->
+  #   console.log 'data = ' + data
+
+  proc.on 'exit', (code, signal) ->
+    callback code
+
 cmd =
   findSymbol: '1'
   findCallees: '2'
@@ -68,3 +84,4 @@ module.exports =
     genericFind cmd.findIncluders, symbol, options, callback
   findAssignments: (symbol, options, callback) ->
     genericFind cmd.findAssignments, symbol, options, callback
+  buildDb: buildDb
