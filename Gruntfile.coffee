@@ -17,10 +17,22 @@ module.exports = (grunt) ->
         indentation:
           level: 'warn'
       src: ['src/**/*.coffee']
+      test: ['spec/**/*.coffee']
       gruntfile: ['Gruntfile.coffee']
 
-  grunt.loadNpmTasks('grunt-contrib-coffee')
-  grunt.loadNpmTasks('grunt-coffeelint')
+    shell:
+      test:
+        command: 'node_modules/jasmine-focused/bin/jasmine-focused ' +
+          '--captureExceptions --coffee spec'
+        options:
+          stdout: true
+          stderr: true
+          failOnError: true
 
-  grunt.registerTask('lint', ['coffeelint'])
-  grunt.registerTask('default', ['lint', 'coffee'])
+  grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-coffeelint'
+  grunt.loadNpmTasks 'grunt-shell'
+
+  grunt.registerTask 'lint', ['coffeelint']
+  grunt.registerTask 'default', ['lint', 'coffee']
+  grunt.registerTask 'test', ['default', 'shell:test']
