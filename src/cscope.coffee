@@ -25,11 +25,14 @@ genericFind = (cmd, symbol, options, callback) ->
     .run (err, stdout, exitcode) ->
       if err
         console.log "could not invoke cscope (#{err})"
-        process.exit 1
+        callback null
+        return
+
       header = stdout[1].match(cscopeRegex)
       lines = parseInt(header[1])
       if lines == 0 # no such symbol
-        return null
+        callback []
+        return
 
       startIdx = 2
       res = []
