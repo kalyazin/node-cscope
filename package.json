@@ -4,7 +4,7 @@
   "description": "node.js wrapper for cscope source code indexer",
   "main": "cscope.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt lint"
   },
   "repository": {
     "type": "git",
