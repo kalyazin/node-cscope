@@ -9,7 +9,7 @@ node_js:
 install:
   - wget -O ../cscope.tar.gz http://sourceforge.net/projects/cscope/files/cscope/15.8a/cscope-15.8a.tar.gz/download
   - tar xf ../cscope.tar.gz -C ..
-  - cd cscope-15.8a
+  - cd ../cscope-15.8a
   - ./configure
   - make
   - cd -
