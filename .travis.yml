@@ -5,3 +5,14 @@ notifications:
 
 node_js:
   - "0.10"
+
+install:
+  - wget -O ../cscope.tar.gz http://sourceforge.net/projects/cscope/files/cscope/15.8a/cscope-15.8a.tar.gz/download
+  - tar xf ../cscope.tar.gz -C ..
+  - cd cscope-15.8a
+  - ./configure
+  - make
+  - cd -
+
+before_script:
+  - export PATH=../cscope-15.8a/src:${PATH}
