@@ -13,6 +13,7 @@ install:
   - ./configure
   - make
   - cd -
+  - npm install
 
 before_script:
   - export PATH=../cscope-15.8a/src:${PATH}
